@@ -72,7 +72,7 @@ function shouldDoOdds(arrLen, totalDupls) {
     }
 }
 
-function calcEvenOddDupls(doOdds, totalDupls, arrLen) {
+function calcEvenOddDupls(totalDupls, arrLen, doOdds) {
     let totalEvenDupls, totalOddDupls;
 
     if (!doOdds) {
@@ -91,7 +91,7 @@ function expandArr(arr, newArrSize) {
     const arrLen = arr.length;
     const totalDupls = newArrSize - arrLen;
     const doOdds = shouldDoOdds(arrLen, totalDupls);
-    const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(doOdds, totalDupls, arrLen);
+    const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(totalDupls, arrLen, doOdds);
     let evensDupld = 0;
     let oddsDupld = 0;
 
