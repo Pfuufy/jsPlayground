@@ -64,41 +64,48 @@
 // 2. start vals[0]
 // 3. dupl. even indices twice and odd index once
 
+function shouldDoOdds(arrLen, totalDupls) {
+    if (arrLen % 2 === 0) {
+        return totalDupls > (arrLen / 2) ? true : false;
+    } else if (arrLen % 2 !== 0) {
+        return totalDupls > Math.ceil((arrLen / 2)) ? true : false;
+    }
+}
+
+function calcEvenOddDupls(doOdds, totalDupls, arrLen) {
+    let totalEvenDupls, totalOddDupls;
+
+    if (!doOdds) {
+        totalEvenDupls = totalDupls;
+        totalOddDupls = 0;
+    } else if (doOdds) {
+        totalOddDupls = totalDupls - Math.ceil(arrLen / 2)
+        totalEvenDupls = totalDupls - totalOddDupls;
+    }
+
+    return [totalEvenDupls, totalOddDupls];
+}
+
 function expandArr(arr, newArrSize) {
     const newArr = [];
     const arrLen = arr.length;
-    let totalDupls = newArrSize - arrLen;
-    let doOdds, evenDupls, oddDupls;
+    const totalDupls = newArrSize - arrLen;
+    const doOdds = shouldDoOdds(arrLen, totalDupls);
+    const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(doOdds, totalDupls, arrLen);
     let evensDupld = 0;
     let oddsDupld = 0;
-
-    if (arrLen % 2 === 0) {
-        doOdds = totalDupls > (arrLen / 2) ? true : false;
-    } else if (arrLen % 2 !== 0) {
-        doOdds = totalDupls > Math.ceil((arrLen / 2)) ? true : false;
-    }
-
-    if (!doOdds) {
-        evenDupls = totalDupls;
-        oddDupls = 0;
-    } else if (doOdds) {
-        oddDupls = totalDupls - Math.ceil(arrLen / 2)
-        evenDupls = totalDupls - oddDupls;
-    }
-
-    console.log(evenDupls, oddDupls, totalDupls);
 
     arr.forEach(
         (num, i) => {
             newArr.push(num);
 
             if (i % 2 === 0) {
-                if (evensDupld < evenDupls) {
+                if (evensDupld < totalEvenDupls) {
                     newArr.push(num);
                     evensDupld++;
                 }
-            } else if (doOdds && i % 2 !== 0) {
-                if (oddsDupld < oddDupls) {
+            } else if (doOdds && (i % 2 !== 0)) {
+                if (oddsDupld < totalOddDupls) {
                     newArr.push(num);
                     oddsDupld++;
                 }
@@ -115,4 +122,4 @@ const arr5 = [1, 2, 3, 4, 5];
 const arr6 = [1, 2, 3, 4, 5, 6];
 const arr7 = [1, 2, 3, 4, 5, 6, 7];
 
-console.log(expandArr(arr7, 14));
+console.log(expandArr(arr7, 8));
