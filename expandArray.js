@@ -86,12 +86,8 @@ function calcEvenOddDupls(totalDupls, arrLen, doOdds) {
     return [totalEvenDupls, totalOddDupls];
 }
 
-function expandArr(arr, newArrSize) {
+function fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls) {
     const newArr = [];
-    const arrLen = arr.length;
-    const totalDupls = newArrSize - arrLen;
-    const doOdds = shouldDoOdds(arrLen, totalDupls);
-    const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(totalDupls, arrLen, doOdds);
     let evensDupld = 0;
     let oddsDupld = 0;
 
@@ -116,6 +112,16 @@ function expandArr(arr, newArrSize) {
     return newArr;
 }
 
+function expandArr(arr, newArrSize) {
+    const arrLen = arr.length;
+    const totalDupls = newArrSize - arrLen;
+    const doOdds = shouldDoOdds(arrLen, totalDupls);
+    const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(totalDupls, arrLen, doOdds);
+    return fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls);
+}
+
+const arr1 = [1];
+const arr2 = [1, 2];
 const arr3 = [1, 2, 3];
 const arr4 = [1, 2, 3, 4];
 const arr5 = [1, 2, 3, 4, 5];
