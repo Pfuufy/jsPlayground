@@ -86,27 +86,29 @@ function calcEvenOddDupls(totalDupls, arrLen, doOdds) {
     return [totalEvenDupls, totalOddDupls];
 }
 
+function calcDuplFactor(totalDupls, arrLen) {
+    const duplFactor = Math.floor(totalDupls / arrLen);
+    const duplRemainder = totalDupls % arrLen;
+
+    return [duplFactor, duplRemainder];
+}
+
 function fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls) {
     const newArr = [];
-    let evensDupld = 0;
-    let oddsDupld = 0;
 
     arr.forEach(
         (num, i) => {
-            let times = 0;
             newArr.push(num);
 
             if (i % 2 === 0) {
                 if (evensDupld < totalEvenDupls) {
                     newArr.push(num);
                     evensDupld++;
-                    times++;
                 }
             } else if (doOdds && (i % 2 !== 0)) {
                 if (oddsDupld < totalOddDupls) {
                     newArr.push(num);
                     oddsDupld++;
-                    times++;
                 }
             }
         }
@@ -118,27 +120,15 @@ function fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls) {
 function expandArr(arr, newArrSize) {
     const arrLen = arr.length;
     const totalDupls = newArrSize - arrLen;
-    const doOdds = shouldDoOdds(arrLen, totalDupls);
-    const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(totalDupls, arrLen, doOdds);
+    const [duplFactor, duplRem] = calcDuplFactor(totalDupls, arrLen);
 
-    console.log(totalEvenDupls, totalOddDupls);
-    return fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls);
+    console.log(duplFactor, duplRem);
+    // const doOdds = shouldDoOdds(arrLen, totalDupls);
+    // const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(totalDupls, arrLen, doOdds);
+
+    // console.log(totalEvenDupls, totalOddDupls);
+    // return fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls);
 }
-
-// I need to do something if totalDupls is greater than arr.length. Like, somehow I need
-// to track how much greater it is and have multiple pushes for that.
-
-// If it is 1 over, then duplicate the first val twice. 2 over, duplicate first 2 vals twice...
-// That part's not too difficult. If it's double arr.len, then all vals get duplicated twice.
-// So maybe I can keep track of how many multiples over it is, and then the remainder.
-
-// Say arr.length is 7, space to fill is 15. That means the diff is 8, which is 7 + 1.
-// So everything gets duplicated twice, and first val gets duplicated 3 times.
-
-// duplication factor = Math.floor(space / len);
-// amount to duplicate by factor = space % len;
-
-
 
 const arr1 = [1];
 const arr2 = [1, 2];
@@ -148,4 +138,4 @@ const arr5 = [1, 2, 3, 4, 5];
 const arr6 = [1, 2, 3, 4, 5, 6];
 const arr7 = [1, 2, 3, 4, 5, 6, 7];
 
-console.log(expandArr(arr3, 8));
+console.log(expandArr(arr3, 9));
