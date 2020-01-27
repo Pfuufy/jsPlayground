@@ -72,15 +72,24 @@ function calcDuplFactorWithRemainder(totalDupls, arrLen) {
 }
 
 function calcEvenOddDupls(arrLen, duplRem) {
-    let evenDupls, oddDupls;
+    let evenDupls = 0, oddDupls = 0;
 
     if (duplRem === 0) {
         return [0, 0];
-    } else if (arrLen % 2 === 0) {
-        console.log('even');
     } else {
-        console.log('odd')
 
+        let i = 1;
+
+        while (i <= duplRem) {
+            
+            if (i <= Math.ceil(arrLen / 2)) {
+                evenDupls++;
+            } else {
+                oddDupls++;
+            }
+
+            i++;
+        }
     }
 
     return [evenDupls, oddDupls];
@@ -115,6 +124,9 @@ function expandArr(arr, newArrSize) {
     const totalDupls = newArrSize - arrLen;
     const [duplFactor, duplRem] = calcDuplFactorWithRemainder(totalDupls, arrLen);
     const [evenDupls, oddDupls] = calcEvenOddDupls(arrLen, duplRem);
+
+    console.log(duplRem);
+
     return fillInVals(arr, duplFactor, evenDupls, oddDupls);
 }
 
@@ -126,4 +138,4 @@ const arr5 = [1, 2, 3, 4, 5];
 const arr6 = [1, 2, 3, 4, 5, 6];
 const arr7 = [1, 2, 3, 4, 5, 6, 7];
 
-console.log(expandArr(arr3, 5));
+console.log(expandArr(arr5, 10));
