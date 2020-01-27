@@ -124,9 +124,6 @@ function expandArr(arr, newArrSize) {
     const totalDupls = newArrSize - arrLen;
     const [duplFactor, duplRem] = calcDuplFactorWithRemainder(totalDupls, arrLen);
     const [evenDupls, oddDupls] = calcEvenOddDupls(arrLen, duplRem);
-
-    console.log(duplRem);
-
     return fillInVals(arr, duplFactor, evenDupls, oddDupls);
 }
 
