@@ -64,52 +64,45 @@
 // 2. start vals[0]
 // 3. dupl. even indices twice and odd index once
 
-function shouldDoOdds(arrLen, totalDupls) {
-    if (arrLen % 2 === 0) {
-        return totalDupls > (arrLen / 2) ? true : false;
-    } else if (arrLen % 2 !== 0) {
-        return totalDupls > Math.ceil((arrLen / 2)) ? true : false;
-    }
-}
-
-function calcEvenOddDupls(totalDupls, arrLen, doOdds) {
-    let totalEvenDupls, totalOddDupls;
-
-    if (!doOdds) {
-        totalEvenDupls = totalDupls;
-        totalOddDupls = 0;
-    } else if (doOdds) {
-        totalEvenDupls = Math.ceil(totalDupls / 2);
-        totalOddDupls = Math.floor(totalDupls / 2);
-    }
-
-    return [totalEvenDupls, totalOddDupls];
-}
-
-function calcDuplFactor(totalDupls, arrLen) {
+function calcDuplFactorWithRemainder(totalDupls, arrLen) {
     const duplFactor = Math.floor(totalDupls / arrLen);
     const duplRemainder = totalDupls % arrLen;
 
     return [duplFactor, duplRemainder];
 }
 
-function fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls) {
+function calcEvenOddDupls(arrLen, duplRem) {
+    let evenDupls, oddDupls;
+
+    if (duplRem === 0) {
+        return [0, 0];
+    } else if (arrLen % 2 === 0) {
+        console.log('even');
+    } else {
+        console.log('odd')
+
+    }
+
+    return [evenDupls, oddDupls];
+}
+
+function fillInVals(arr, duplFactor, evenDupls, oddDupls) {
     const newArr = [];
 
     arr.forEach(
         (num, i) => {
             newArr.push(num);
 
-            if (i % 2 === 0) {
-                if (evensDupld < totalEvenDupls) {
-                    newArr.push(num);
-                    evensDupld++;
-                }
-            } else if (doOdds && (i % 2 !== 0)) {
-                if (oddsDupld < totalOddDupls) {
-                    newArr.push(num);
-                    oddsDupld++;
-                }
+            for (let i = 0; i < duplFactor; i++) {
+                newArr.push(num);
+            }
+
+            if (i % 2 === 0 && evenDupls > 0) {
+                newArr.push(num);
+                evenDupls--;
+            } else if (i % 2 !== 0 && oddDupls > 0) {
+                newArr.push(num);
+                oddDupls--;
             }
         }
     );
@@ -120,14 +113,9 @@ function fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls) {
 function expandArr(arr, newArrSize) {
     const arrLen = arr.length;
     const totalDupls = newArrSize - arrLen;
-    const [duplFactor, duplRem] = calcDuplFactor(totalDupls, arrLen);
-
-    console.log(duplFactor, duplRem);
-    // const doOdds = shouldDoOdds(arrLen, totalDupls);
-    // const [totalEvenDupls, totalOddDupls] = calcEvenOddDupls(totalDupls, arrLen, doOdds);
-
-    // console.log(totalEvenDupls, totalOddDupls);
-    // return fillInVals(arr, doOdds, totalEvenDupls, totalOddDupls);
+    const [duplFactor, duplRem] = calcDuplFactorWithRemainder(totalDupls, arrLen);
+    const [evenDupls, oddDupls] = calcEvenOddDupls(arrLen, duplRem);
+    return fillInVals(arr, duplFactor, evenDupls, oddDupls);
 }
 
 const arr1 = [1];
@@ -138,4 +126,4 @@ const arr5 = [1, 2, 3, 4, 5];
 const arr6 = [1, 2, 3, 4, 5, 6];
 const arr7 = [1, 2, 3, 4, 5, 6, 7];
 
-console.log(expandArr(arr3, 9));
+console.log(expandArr(arr3, 5));
