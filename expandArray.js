@@ -135,4 +135,4 @@ const arr5 = [1, 2, 3, 4, 5];
 const arr6 = [1, 2, 3, 4, 5, 6];
 const arr7 = [1, 2, 3, 4, 5, 6, 7];
 
-console.log(expandArr(arr5, 10));
+console.log(expandArr(arr4, 3));

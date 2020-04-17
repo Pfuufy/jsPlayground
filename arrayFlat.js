@@ -3,10 +3,15 @@ const test2 = [[1], [2], [3]];
 const test3 = [1, [2], [[3]], [[[[[4]]]]]];
 const test4 = [{one: 1}, [{two: 2}], [[{three: 3}]]];
 const test5 = 'hey';
+const test6 = [1, [2], [[3]]];
 
 
-function arrayFlat(arr, depth) {
+const flatArray = (arr, depth) => {
     let retArr = [];
+
+    console.log(depth);
+
+    const d = depth;
 
     Array.isArray(arr) && arr.forEach(
         el => {
@@ -14,15 +19,14 @@ function arrayFlat(arr, depth) {
                 if (depth === 0) {
                     retArr = el;
                 } else {
-                    retArr = retArr.concat(arrayFlat(el, depth - 1));
+                    retArr = retArr.concat(flatArray(el, d - 1));
                 }
             } else {
                 retArr = retArr.concat(el);
             }
         }
-    )
+    );
 
     return retArr;
-}
-
-console.log(arrayFlat(test3, 2));
+};
+console.log(flatArray(test6));
